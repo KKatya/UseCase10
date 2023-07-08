@@ -7,7 +7,7 @@ public static class StringValidator
     public static bool IsValidString(string input, int maxLength)
     {
         // Validate input parameters
-        if (input is null || maxLength <= 0)
+        if (string.IsNullOrWhiteSpace(input) || maxLength <= 0)
         {
             return false;
         }

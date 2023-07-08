@@ -1,0 +1,45 @@
+User
+document this function and the regular expression 
+public static class StringValidator
+{
+    public static bool IsValidString(string input, int maxLength)
+    {
+        // Validate input parameters
+        if (input is null || maxLength <= 0)
+        {
+            return false;
+        }
+
+        // Regular expression pattern:
+        // 1. ^                     : start of the line
+        // 2. (?=.*[a-z])           : positive lookahead, ensure at least one lower case letter exists
+        // 3. (?=.*[A-Z])           : positive lookahead, ensure at least one upper case letter exists
+        // 4. (?=.*\d)              : positive lookahead, ensure at least one digit exists
+        // 5. (?=.*[!""#$%&'()*+,-./:;<=>?@\\[\\]^_`{|}~]) : positive lookahead, ensure at least one special character exists
+        // 6. (?!.*\s)              : negative lookahead, ensure no whitespace character exists
+        // 7. .{1,maxLength}$       : match anything with length from 1 to maxLength till the end of the line
+        string pattern = @"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!""#$%&'()*+,-./:;<=>?@[\]^_`{|}~])(?!.*\s).{1," + maxLength + @"}$";
+
+        // Validate the string against the regular expression
+        return Regex.IsMatch(input, pattern);
+    }
+}
+ChatGPT
+This function, IsValidString, is a static method within the StringValidator class. It takes two parameters: input of type string and maxLength of type int. The function is responsible for validating whether the input string meets certain criteria.
+
+The function begins by validating the input parameters. If the input is null or the maxLength is less than or equal to 0, the function returns false indicating invalid input.
+
+The function then constructs a regular expression pattern using the maxLength parameter. The pattern is explained as follows:
+
+^: Matches the start of the line.
+(?=.*[a-z]): Positive lookahead. Ensures that at least one lowercase letter exists.
+(?=.*[A-Z]): Positive lookahead. Ensures that at least one uppercase letter exists.
+(?=.*\d): Positive lookahead. Ensures that at least one digit exists.
+(?=.*[!"#$%&'()*+,-./:;<=>?@[\]^_{|}~])`: Positive lookahead. Ensures that at least one special character exists. The special characters are within the square brackets.
+(?!.*\s): Negative lookahead. Ensures that no whitespace character exists.
+.{1,maxLength}$: Matches any character with a length from 1 to maxLength until the end of the line.
+The constructed regular expression pattern is then used with Regex.IsMatch to validate the input string.
+
+If the input string matches the pattern, the function returns true, indicating that the string is valid according to the specified criteria. Otherwise, it returns false.
+
+In summary, this function checks if a string meets certain criteria including having at least one lowercase letter, one uppercase letter, one digit, one special character, no whitespace, and a length between 1 and maxLength.
