@@ -6,6 +6,12 @@ public static class StringValidator
 {
     public static bool IsValidString(string input, int maxLength)
     {
+        // Validate input parameters
+        if (input is null || maxLength <= 0)
+        {
+            return false;
+        }
+
         // Regular expression pattern:
         // 1. ^                     : start of the line
         // 2. (?=.*[a-z])           : positive lookahead, ensure at least one lower case letter exists
